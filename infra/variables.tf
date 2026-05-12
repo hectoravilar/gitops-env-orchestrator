@@ -14,3 +14,14 @@ variable "cidr_block" {
   type        = string
   default     = "10.0.0.0/16"
 }
+variable "eks_cluster_name" {
+  description = "The name of the EKS cluster."
+  type        = string
+  default     = "gitops-eks-cluster"
+}
+variable "k8s_version" {
+  description = "The Kubernetes version for the EKS cluster."
+  type        = string
+  default     = "1.33"
+}
+
