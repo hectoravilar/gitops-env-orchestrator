@@ -59,3 +59,10 @@ This project was built following the official guidelines and best practices from
 - [Docker Login Action](https://github.com/marketplace/actions/docker-login): Secure authentication to the GitHub Container Registry (GHCR).
 - [Docker Metadata Action](https://github.com/marketplace/actions/docker-metadata-action): Dynamic generation of Git SHA-based image tags for deployment traceability.
 - [Docker Build and Push Action](https://github.com/marketplace/actions/build-and-push-docker-images): Automated container build processes integrated directly into the CI pipeline.
+
+### Kubernetes Orchestration
+
+- [Amazon EKS Kubeconfig](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html): AWS CLI configuration to connect local environments to the managed EKS control plane.
+- [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/): Declarative updates for Pods and ReplicaSets, ensuring high availability of the target workload.
+- [Liveness and Readiness Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/): HTTP-based health checks configured to monitor application state and automate self-healing.
+- [Kubernetes Services (LoadBalancer)](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer): Network abstraction utilized to expose the application to the internet via an automatically provisioned AWS Elastic Load Balancer.
