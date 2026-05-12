@@ -1,0 +1,49 @@
+name: CI - Build and Push Workload Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/**"
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions UI
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    # Explicitly grant the GITHUB_TOKEN permissions required to publish packages to GHCR
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # Checkout the repository code into the runner's workspace
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Authenticate with GitHub Container Registry (GHCR) using the default GitHub token
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Automatically generate dynamic tags and labels based on Git metadata
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=sha,format=short
+
+      # Build the container image from the app/ context and push it to the registry
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
