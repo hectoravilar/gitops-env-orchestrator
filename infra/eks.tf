@@ -6,10 +6,25 @@ module "eks" {
   kubernetes_version = var.k8s_version
 
   # Optional
-  endpoint_public_access = true
+  endpoint_public_access  = true
+  endpoint_private_access = true
 
   # Optional: Adds the current caller identity as an administrator via cluster access entry
   enable_cluster_creator_admin_permissions = true
+
+  # Essential Kubernetes Addons for networking and DNS
+  addons = {
+    coredns = {
+      most_recent = true
+    }
+    kube-proxy = {
+      most_recent = true
+    }
+    vpc-cni = {
+      most_recent    = true
+      before_compute = true
+    }
+  }
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
@@ -24,6 +39,11 @@ module "eks" {
       min_size     = 2
       max_size     = 2
       desired_size = 2
+
+      iam_role_additional_policies = {
+        AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        AmazonEKS_CNI_Policy         = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      }
     }
   }
 

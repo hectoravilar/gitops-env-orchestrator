@@ -17,21 +17,29 @@ spec:
     spec:
       containers:
         - name: gitops-env-orchestrator
-          image: ghcr.io/seu-usuario/gitops-env-orchestrator:sha-xyz
+          image: nginx:alpine
           ports:
-            - containerPort: 8000
+            - containerPort: 80
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
 
           # Proper health checks pointing to the FastAPI /health endpoint
           livenessProbe:
             httpGet:
-              path: /health
-              port: 8000
+              path: /
+              port: 80
             initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
-              path: /health
-              port: 8000
+              path: /
+              port: 80
             initialDelaySeconds: 5
             periodSeconds: 5
 
@@ -42,11 +50,11 @@ metadata:
   name: gitops-service
 spec:
   # Instructs AWS to provision a public Elastic Load Balancer (ELB)
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     # Must match the Deployment label exactly for traffic routing to work
     app: gitops-env-orchestrator
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8000
+      targetPort: 80
