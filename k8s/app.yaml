@@ -17,9 +17,9 @@ spec:
     spec:
       containers:
         - name: gitops-env-orchestrator
-          image: nginx:alpine
+          image: 779846804202.dkr.ecr.us-east-1.amazonaws.com/gitops-ecr-repository:v1.0.0
           ports:
-            - containerPort: 80
+            - containerPort: 8000
 
           resources:
             requests:
@@ -29,17 +29,17 @@ spec:
               memory: "256Mi"
               cpu: "200m"
 
-          # Proper health checks pointing to the FastAPI /health endpoint
+          
           livenessProbe:
             httpGet:
               path: /
-              port: 80
+              port: 8000
             initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /
-              port: 80
+              port: 8000
             initialDelaySeconds: 5
             periodSeconds: 5
 
@@ -57,4 +57,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8000
