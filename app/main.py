@@ -3,7 +3,7 @@ from fastapi import FastAPI
 # FastAPI Instance
 # Initialize the application with metadata for auto-generated documentation (Swagger/OpenAPI).
 app = FastAPI(
-    title="gitops-env-orchestrator API"
+    title="gitops-env-orchestrator API",
     description="Target workload microservice for the GitOps Kubernetes cluster.",
     version="1.0.0"
 

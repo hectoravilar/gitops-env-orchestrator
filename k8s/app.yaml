@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: gitops-env-orchestrator
-          image: 779846804202.dkr.ecr.us-east-1.amazonaws.com/gitops-ecr-repository:v1.0.0
+          image: 779846804202.dkr.ecr.us-east-1.amazonaws.com/gitops-ecr-repository:v1.0.2
           ports:
             - containerPort: 8000
 
